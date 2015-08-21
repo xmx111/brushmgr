@@ -1,16 +1,9 @@
 package com.ufo.core.service;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import com.ufo.appi.context.AppiSession;
+import com.ufo.core.annotation.MetaData;
+import com.ufo.core.dao.BaseDao;
+import com.ufo.core.pagination.GroupPropertyFilter;
+import com.ufo.core.pagination.PropertyFilter;
 import org.hibernate.Criteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +11,14 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.ufo.core.annotation.MetaData;
-import com.ufo.core.dao.BaseDao;
-import com.ufo.core.pagination.GroupPropertyFilter;
-import com.ufo.core.pagination.PropertyFilter;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public interface IBaseSpringDataService<T extends Persistable<? extends Serializable>, ID extends Serializable> {
 
@@ -51,14 +48,6 @@ public interface IBaseSpringDataService<T extends Persistable<? extends Serializ
      * @return
      */
     public T save(T entity);
-
-    /**
-     * 数据保存操作
-     *
-     * @param entity
-     * @return
-     */
-    public T saveAppi(T entity, AppiSession appiSession);
 
     /**
      * 批量数据保存操作 其实现只是简单循环集合每个元素调用 {@link #save(Persistable)}
@@ -307,7 +296,9 @@ public interface IBaseSpringDataService<T extends Persistable<? extends Serializ
     /**
      * 子类额外追加过滤限制条件的入口方法，一般基于当前登录用户强制追加过滤条件
      * 
-     * @param filters
+     * @param root
+     * @param query
+     * @param builder
      */
     List<Predicate> appendPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder);
 

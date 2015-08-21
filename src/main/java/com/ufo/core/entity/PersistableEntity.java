@@ -1,17 +1,15 @@
 package com.ufo.core.entity;
 
-import java.io.Serializable;
-import java.util.Map;
-
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Persistable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Persistable;
+
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import java.io.Serializable;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 @MappedSuperclass

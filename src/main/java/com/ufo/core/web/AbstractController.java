@@ -1,29 +1,23 @@
 package com.ufo.core.web;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.io.StringWriter;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ufo.config.sys.entity.Manager;
+import com.ufo.core.common.ProcResult;
+import com.ufo.core.dto.IIdDTO;
+import com.ufo.core.service.IService;
+import com.ufo.core.utils.JsonUtils;
+import com.ufo.core.utils.NumberUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ufo.config.sys.entity.Manager;
-import com.ufo.core.common.ProcResult;
-import com.ufo.core.dto.IIdDTO;
-import com.ufo.core.service.IService;
-import com.ufo.core.utils.FileUtils;
-import com.ufo.core.utils.ImageUtils;
-import com.ufo.core.utils.JsonUtils;
-import com.ufo.core.utils.NumberUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringWriter;
 
 public abstract class AbstractController<T extends IIdDTO> extends AbstractBaseController {
     //返回首页路径 
@@ -163,17 +157,4 @@ public abstract class AbstractController<T extends IIdDTO> extends AbstractBaseC
         return obj instanceof Manager ? (Manager) obj : null;
     }
 
-    /** 
-     * 删除文件
-    * @param filepath
-    */
-    protected void deleteImage(String filePath) {
-        if (StringUtils.isNotBlank(filePath)) {
-            FileUtils.removeFile(FileUtils.normalizeFilePath(getUploadPath() + filePath));
-            if (!ImageUtils.isThumbPath(filePath)) {
-                String thumbPath = ImageUtils.toThumbPath(filePath);
-                FileUtils.removeFile(FileUtils.normalizeFilePath(getUploadPath() + thumbPath));
-            }
-        }
-    }
 }

@@ -2,8 +2,6 @@ package com.ufo.core.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.ufo.appi.context.AppiSession;
-import com.ufo.appi.context.SessionContext;
 import com.ufo.config.sys.entity.Manager;
 import com.ufo.core.annotation.MetaData;
 import com.ufo.core.dao.BaseDao;
@@ -36,7 +34,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.*;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.expression.spel.ast.Operator;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -120,37 +117,6 @@ public abstract class BaseSpringDataService<T extends Persistable<? extends Seri
                 ((OperatorEntity) entity).setCreateOperator(obj.getCreateOperator());
                 ((OperatorEntity) entity).setCreateTime(obj.getCreateTime());
                 ((OperatorEntity) entity).setUpdateOperator(this.getOperation());
-                ((OperatorEntity) entity).setUpdateTime(this.getCurrentTime());
-            }
-            preUpdate(entity);
-        }
-        return getEntityDao().save(entity);
-    }
-
-    /**
-     * 数据保存操作
-     *
-     * @param entity
-     * @return
-     */
-    public T saveAppi(T entity, AppiSession appiSession) {
-        Manager operator = new Manager();
-        if (appiSession == null || appiSession.getUserInfo() == null || appiSession.getUserInfo().getId() == Integer.MIN_VALUE)
-            operator = null;
-        else
-            operator.setId(appiSession.getUserInfo().getId());
-        if (entity.isNew()) {
-            if (entity instanceof OperatorEntity){
-                ((OperatorEntity) entity).setCreateOperator(operator);
-                ((OperatorEntity) entity).setCreateTime(this.getCurrentTime());
-            }
-            preInsert(entity);
-        } else {
-            if (entity instanceof OperatorEntity){
-                OperatorEntity obj = (OperatorEntity)this.findOne((ID)entity.getId());
-                ((OperatorEntity) entity).setCreateOperator(obj.getCreateOperator());
-                ((OperatorEntity) entity).setCreateTime(obj.getCreateTime());
-                ((OperatorEntity) entity).setUpdateOperator(operator);
                 ((OperatorEntity) entity).setUpdateTime(this.getCurrentTime());
             }
             preUpdate(entity);

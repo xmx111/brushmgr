@@ -13,7 +13,7 @@
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<logback.version>1.0.0</logback.version>
-		<log4j.version>1.2</log4j.version>
+		<log4j.version>1.2.2</log4j.version>
 		<mysql.version>5.1.25</mysql.version>
 		<java.version>1.6</java.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
@@ -470,11 +470,6 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>sportsexp</id>
-			<name>sportsexp</name>
-			<url>http://mvn.sportsexp.net/nexus/content/repositories/sportsexp</url>
-		</repository>
-		<repository>
 			<id>central</id>
 			<name>Central Repository</name>
 			<url>http://repo.maven.apache.org/maven2</url>
@@ -567,26 +562,26 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.0.2.v20130417</version>
-				<configuration>
-					<properties>
-						<property>
-							<name>java.awt.headless</name>
-							<value>true</value>
-						</property>
-						<property>
-							<!-- 200M -->
-							<name>org.eclipse.jetty.server.Request.maxFormContentSize</name>
-							<value>20000000</value>
-						</property>
-					</properties>
-					<stopPort>18080</stopPort>
-					<stopKey>brushmgrserver</stopKey>
-				</configuration>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.eclipse.jetty</groupId>-->
+				<!--<artifactId>jetty-maven-plugin</artifactId>-->
+				<!--<version>9.0.2.v20130417</version>-->
+				<!--<configuration>-->
+					<!--<properties>-->
+						<!--<property>-->
+							<!--<name>java.awt.headless</name>-->
+							<!--<value>true</value>-->
+						<!--</property>-->
+						<!--<property>-->
+							<!--&lt;!&ndash; 200M &ndash;&gt;-->
+							<!--<name>org.eclipse.jetty.server.Request.maxFormContentSize</name>-->
+							<!--<value>20000000</value>-->
+						<!--</property>-->
+					<!--</properties>-->
+					<!--<stopPort>18080</stopPort>-->
+					<!--<stopKey>brushmgrserver</stopKey>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
 </project>

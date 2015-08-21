@@ -1,9 +1,12 @@
 package com.ufo.config.sys.web;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.ufo.config.sys.entity.Manager;
 import com.ufo.config.sys.entity.Role;
+import com.ufo.config.sys.service.interfaces.IManagerService;
 import com.ufo.config.sys.service.interfaces.IRoleService;
+import com.ufo.core.annotation.Description;
+import com.ufo.core.service.IBaseSpringDataService;
+import com.ufo.core.web.PersistableController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,12 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ufo.config.sys.entity.Manager;
-import com.ufo.config.sys.service.interfaces.IManagerService;
-import com.ufo.core.annotation.Description;
-import com.ufo.core.service.IBaseSpringDataService;
-import com.ufo.core.web.PersistableController;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller("configSysManagerController")
@@ -109,12 +107,6 @@ public class ManagerController extends PersistableController<Manager, Integer> {
             return restFailed("账号编号重复");
         }
 
-        if (dto.getEmployee() != null && dto.getEmployee().getId() == null)
-            dto.setEmployee(null);
-        if (dto.getCustom() != null && dto.getCustom().getId() == null)
-            dto.setCustom(null);
-        if (dto.getSupplier() != null && dto.getSupplier().getId() == null)
-            dto.setSupplier(null);
         return super.save(dto);
     }
 

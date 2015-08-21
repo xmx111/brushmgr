@@ -1,37 +1,21 @@
 package com.ufo.config.sys.entity;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.ForeignKey;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufo.core.annotation.EntityAutoCode;
 import com.ufo.core.annotation.MetaData;
 import com.ufo.core.entity.UndeleteEntity;
-import com.ufo.ucenter.custom.entity.Custom;
-import com.ufo.ucenter.employee.entity.Employee;
-import com.ufo.ucenter.supplier.entity.Supplier;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /** 
 * 类名称：Manager 
@@ -85,12 +69,6 @@ public class Manager extends UndeleteEntity implements UserDetails, java.io.Seri
 
     @MetaData(value = "账号类型")
     private ManagerEnum type;
-
-    private Supplier supplier;
-
-    private Employee employee;
-
-    private Custom custom;
     
     @MetaData(value = "账号状态")
     @EntityAutoCode(order = 20, listShow = true)
@@ -147,36 +125,6 @@ public class Manager extends UndeleteEntity implements UserDetails, java.io.Seri
 
     public void setType(ManagerEnum type) {
         this.type = type;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "supplier_id")
-    public Supplier getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "employee_id")
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "custom_id")
-    public Custom getCustom() {
-        return custom;
-    }
-
-    public void setCustom(Custom custom) {
-        this.custom = custom;
     }
 
     @Enumerated(EnumType.ORDINAL)

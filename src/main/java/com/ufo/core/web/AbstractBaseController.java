@@ -1,49 +1,27 @@
 package com.ufo.core.web;
 
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-
 import com.google.common.collect.Sets;
 import com.ufo.core.common.BaseRuntimeException;
 import com.ufo.core.common.Paginator;
 import com.ufo.core.common.ProcResult;
 import com.ufo.core.common.WebServiceResult;
-import com.ufo.core.service.impl.ResourceContextHolder;
 import com.ufo.core.web.converter.DatePropertyEdit;
 import com.ufo.core.web.converter.TimePropertyEdit;
 import com.ufo.core.web.converter.TimestampPropertyEdit;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
 
 public abstract class AbstractBaseController {
     //访问根路径
     private static final String PATH_ROOT = "/";
     //日记
     protected Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    protected ResourceContextHolder resourceContextHolder;
-
-    /** 
-     * 上传文件根目录 
-    * @return
-    */
-    protected String getUploadPath() {
-        return normalizePath(resourceContextHolder.getUploadPath());
-    }
-
-    /** 
-     * 下载文件路径 
-    * @return
-    */
-    protected String getDownloadUrl() {
-        return resourceContextHolder.getDownloadUrl();
-    }
 
     /** 
      * 返回模块视图(JSP文件)根目录路径,默认返回""
@@ -99,29 +77,6 @@ public abstract class AbstractBaseController {
         }
         buf.append(_path);
         return normalizePath(buf.toString());
-    }
-
-    /** 
-     * 将图片相对址转化为绝对地址
-    * @param path
-    * @return
-    */
-    protected String converImagePath(final String path) {
-        if (StringUtils.isBlank(path)) {
-            return null;
-        } else {
-            StringBuffer buf = new StringBuffer(getDownloadUrl());
-            if (buf.length() == 0 || buf.charAt(buf.length() - 1) != '/') {
-                buf.append("/");
-            }
-            String _path = normalizePath(path);
-            if (_path.startsWith("/")) {
-                buf.append(_path.substring(1));
-            } else {
-                buf.append(_path);
-            }
-            return buf.toString();
-        }
     }
 
     /** 

@@ -7,15 +7,12 @@ import com.ufo.config.sys.entity.AttachmentFile;
 import com.ufo.config.sys.service.interfaces.IAttachmentFileService;
 import com.ufo.core.entity.AttachmentableEntity;
 import com.ufo.core.entity.BaseEntity;
-import com.ufo.core.utils.ServletUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.List;
@@ -88,24 +85,5 @@ public abstract class FileBaseController<T extends BaseEntity, ID extends Serial
         Map<String, List<Map<String, Object>>> response = Maps.newHashMap();
         response.put("files", filesResponse);
         return response;
-    }
-
-    protected void attachmentDownload(HttpServletResponse response, T entity, String attachmentId) {
-        try {
-            AttachmentFile attachmentFile = getAttachmentFileService().findOne(attachmentId);
-            if (attachmentFile != null && entity.getId().toString().equals(attachmentFile.getEntityId())
-                    && entity.getClass().getName().equals(attachmentFile.getEntityClassName())) {
-                ServletUtils.setFileDownloadHeader(response, attachmentFile.getFileRealName());
-                response.setContentType(attachmentFile.getFileType());
-
-                String rootPath = resourceContextHolder.getFileUploadRootDir();
-                File diskFile = new File(rootPath + attachmentFile.getFileRelativePath() + File.separator
-                        + attachmentFile.getDiskFileName());
-                logger.debug("Downloading attachment file from disk: {}", diskFile.getAbsolutePath());
-                ServletUtils.renderFileDownload(response, FileUtils.readFileToByteArray(diskFile));
-            }
-        } catch (Exception e) {
-            logger.error("Download file error", e);
-        }
     }
 }
